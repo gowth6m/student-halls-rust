@@ -1,11 +1,12 @@
-use student_halls_backend::setup_routes;
+use student_halls_backend::setup_server;
 use vercel_runtime::{ process_request, process_response, run_service, Error, ServiceBuilder };
-
+use dotenv::dotenv;
 mod lambda;
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let app = setup_routes().await;
+    dotenv().ok();
+    let app = setup_server().await;
 
     let handler = ServiceBuilder::new()
         .map_request(process_request)
