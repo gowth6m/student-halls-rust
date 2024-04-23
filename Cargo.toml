@@ -1,0 +1,21 @@
+[package]
+name = "student_halls_backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tracing = { version = "0.1", features = ["log"] }
+axum = "0.6.20"
+serde_json = "1.0.108"
+tokio = { version = "1.34.0", features = ["rt", "macros"] }
+tower = "0.4.13"
+tower-service = "0.3.2"
+vercel_runtime = "1.1.0"
+serde = "1.0.198"
+tracing-subscriber = "0.3.18"
+utoipa = "4.2.0"
+utoipa-swagger-ui = { features = ["axum"] }
+
+[[bin]]
+name = "vercel"
+path = "api/vercel.rs"
