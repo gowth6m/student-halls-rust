@@ -10,8 +10,12 @@ pub fn root_routes() -> Router {
 async fn root_fn() -> Json<ApiResponse<Value>> {
     let response = ApiResponse::new(
         200,
-        "Success".to_string(),
-        json!({"greeting": "Hello, World!"})
+        "Welcome to Student-halls REST API!".to_string(),
+        json!({
+                "author": "Gowthaman Ravindrathas",
+                "version": "0.1.0",
+                "openapi": "/api-docs"
+            })
     );
     Json(response)
 }
