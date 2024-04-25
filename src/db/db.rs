@@ -4,6 +4,7 @@ use once_cell::sync::Lazy;
 use std::env;
 
 use crate::models::university_models::University;
+use crate::models::hall_models::Hall;
 
 static MONGO_URI: Lazy<String> = Lazy::new(|| {
     env::var("MONGO_URI").expect("Expected MONGO_URI to be set in the environment")
@@ -19,7 +20,7 @@ pub struct MongoConnection {
 
 pub struct Collections {
     pub university: Collection<University>,
-    pub hall: Collection<Document>,
+    pub hall: Collection<Hall>,
 }
 
 impl MongoConnection {
@@ -29,7 +30,7 @@ impl MongoConnection {
         let db = client.database(&*MONGO_DB_NAME);
 
         let university_collection = db.collection::<University>("university");
-        let hall_collection = db.collection::<Document>("hall");
+        let hall_collection = db.collection::<Hall>("hall");
 
         Ok(Self {
             db,
