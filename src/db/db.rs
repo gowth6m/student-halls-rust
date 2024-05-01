@@ -5,6 +5,7 @@ use std::env;
 
 use crate::models::university_models::University;
 use crate::models::hall_models::Hall;
+use crate::models::user_models::User;
 
 static MONGO_URI: Lazy<String> = Lazy::new(|| {
     env::var("MONGO_URI").expect("Expected MONGO_URI to be set in the environment")
@@ -21,6 +22,7 @@ pub struct MongoConnection {
 pub struct Collections {
     pub university: Collection<University>,
     pub hall: Collection<Hall>,
+    pub user: Collection<User>,
 }
 
 impl MongoConnection {
@@ -31,12 +33,14 @@ impl MongoConnection {
 
         let university_collection = db.collection::<University>("university");
         let hall_collection = db.collection::<Hall>("hall");
+        let user_collection = db.collection::<User>("user");
 
         Ok(Self {
             db,
             collections: Collections {
                 university: university_collection,
                 hall: hall_collection,
+                user: user_collection,
             },
         })
     }

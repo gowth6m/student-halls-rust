@@ -1,29 +1,10 @@
-use axum::{ Router, routing::{ get, post }, Json };
-use serde::{ Deserialize, Serialize };
-
-use crate::services::user::user_handlers::get_current_user;
+use axum::{ Router, routing::{ get, post }, middleware as axum_middleware };
+use crate::services::user::user_handlers::{ create_user, get_current_user };
+use crate::middleware::auth_guard::auth_guard;
 
 pub fn user_routes() -> Router {
     Router::new()
-        .route("/", get(user_fn))
-        .route("/current", get(get_current_user))
-        .route("/", post(user_post_fn))
-}
-
-async fn user_fn() -> Json<&'static str> {
-    Json("Hello, User!")
-}
-
-async fn user_post_fn(Json(payload): Json<InputMessage>) -> Json<Message> {
-    Json(Message { msg: payload.msg })
-}
-
-#[derive(Deserialize)]
-struct InputMessage {
-    msg: String,
-}
-
-#[derive(Serialize)]
-struct Message {
-    msg: String,
+        .route("/create", post(create_user))
+        // .route("/login", post(todo!()))
+        .route("/current", get(get_current_user).layer(axum_middleware::from_fn(auth_guard)))
 }

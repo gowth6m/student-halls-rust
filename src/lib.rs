@@ -8,6 +8,7 @@ pub mod routes;
 pub mod services;
 pub mod db;
 pub mod models;
+pub mod middleware;
 
 pub async fn setup_server() -> Router {
     let mongo_conn = MongoConnection::new().await.expect("Failed to initialize MongoDB");
